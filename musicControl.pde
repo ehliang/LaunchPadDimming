@@ -35,13 +35,11 @@ void setup() {
 void draw() {
   background(0);
   if (selection ==1){
-    b = byte(0); 
-    port.write(b);
+    port.write(0);
     //pure off; 
   }
   else if (selection ==2){
-    b = byte(255); 
-    port.write(b);
+    port.write(255);
     //pure on - full brightness
   }
   
@@ -49,14 +47,13 @@ void draw() {
 
   beat.detect(input.mix);
   
-  if ( beat.isOnset() ) eRadius = 255;
+  if ( beat.isOnset() ) eRadius = 254;
   eRadius*= 0.92; 
   if (eRadius<5) eRadius =0; 
   println(eRadius); 
 
   //write the eRadius value to a byte and send it through USB
-  b = byte(eRadius); 
-  port.write(b);
+  port.write(byte(eRadius));
   //music mode
   }
 }
@@ -64,17 +61,22 @@ void draw() {
 void keyPressed(){
   if (key == '1')
   {
-    selection =1; 
+    if (selection==3)
+    port.write(255); 
+    
+    selection=1; 
   }
   else if (key == '2')
   {
-    selection =2;  
+    if (selection==3)
+    port.write(255); 
+    
+    selection=2; 
   }
   else if (key == '3')
   {
-    selection =3; 
-    b = byte(162);
-    port.write(b); 
+    selection = 3; 
+    port.write(162); 
   }
   else 
   {
@@ -83,7 +85,8 @@ void keyPressed(){
 }
 
 void exit(){
-  if (selection==3)
-   port.write(0); 
+  if (selection==3){
+   port.write(255); 
+  }
    super.exit(); 
 }

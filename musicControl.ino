@@ -23,30 +23,36 @@ void loop() {
     // read the most recent byte (which will be from 0 to 255):
     brightness = Serial.read();
     // set the brightness of the LED:
-    switch(brightness) {
-      case 0: 
-       analogWrite(ledPin, brightness); 
-       value = 0; 
-       Flash.erase(flash); 
-       Flash.write(flash, &value,1); 
-       //erases and writes to flash to save light state
-       break; 
-      case 162: 
-        writeEnabled=true; 
-       break; 
-      case163:
-	 setRun=true;
-	break;  	
-      case 255: 
-       analogWrite(ledPin, brightness);
-       value=255; 
-       Flash.erase(flash); 
-       Flash.write(flash, &value,1);
-       break; 
-      default: 
-        if (writeEnabled)
-        analogWrite(ledPin, brightness);
+    if (!writeEnabled){
+      switch(brightness) {
+        case 0: 
+         analogWrite(ledPin, brightness); 
+         value = 0; 
+         Flash.erase(flash); 
+         Flash.write(flash, &value,1); 
+         //erases and writes to flash to save light state
+         break; 
+        case 162: 
+          writeEnabled=true; 
+         break;   	
+        case 255: 
+         analogWrite(ledPin, brightness);
+         value=255; 
+         Flash.erase(flash); 
+         Flash.write(flash, &value,1);
+         break; 
+        default: 
+         break;
+      }
     }
+    else{ 
+     if (brightness == 255){
+         writeEnabled=false; 
+         setRun=true;
+     }
+     else  
+       analogWrite(ledPin, brightness);
+   } 
   }
   else
   {
