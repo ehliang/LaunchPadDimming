@@ -85,6 +85,6 @@ void keyPressed(){
 
 void exit(){
   if (selection==3)
-   port.write(b); 
+   port.write(0); 
    super.exit(); 
 }
