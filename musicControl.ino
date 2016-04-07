@@ -34,6 +34,9 @@ void loop() {
       case 162: 
         writeEnabled=true; 
        break; 
+      case163:
+	 setRun=true;
+	break;  	
       case 255: 
        analogWrite(ledPin, brightness);
        value=255; 

@@ -19,7 +19,6 @@ byte b;
 
 
 void setup() {
-  size(256, 150);
 
   println("Available serial ports:");
   println(Serial.list());
@@ -29,8 +28,8 @@ void setup() {
   beat = new BeatDetect(); 
   eRadius =0; 
 
-  port = new Serial(this, Serial.list()[0], 9600); 
-  //port = new Serial(this, "COM1", 9600);
+  port = new Serial(this, Serial.list()[1], 9600); 
+  //port = new Serial(this, "/dev/tty.uart-C1FF4A55BBC82651", 9600);
 }
 
 void draw() {
